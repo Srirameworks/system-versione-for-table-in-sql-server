@@ -40,35 +40,35 @@ ALTER TABLE Accounts SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.AccountsHi
 
 --user creation for Web app and Backup process
 -- WEB App Access
-drop user DCFLogin
+drop user TestLogin
 in
 GO
 
-CREATE USER DCFLogin FROM LOGIN DCFLogin;
+CREATE USER TestLogin FROM LOGIN TestLogin;
 GO
-EXEC sp_addrolemember 'db_datareader', 'DCFLogin'
-EXEC sp_addrolemember 'db_datawriter', 'DCFLogin'
+EXEC sp_addrolemember 'db_datareader', 'TestLogin'
+EXEC sp_addrolemember 'db_datawriter', 'TestLogin'
 GO
-GRANT EXECUTE TO DCFLogin
+GRANT EXECUTE TO TestLogin
 GO
 
 --This must be run on each database that is being backed up
-DROP USER DCFBACKUP
-CREATE USER DCFBackup FROM LOGIN DCFBackup;
-GRANT VIEW DEFINITION TO DCFBackup
-GRANT SELECT TO DCFBackup
+DROP USER TestBACKUP
+CREATE USER TestBackup FROM LOGIN TestBackup;
+GRANT VIEW DEFINITION TO TestBackup
+GRANT SELECT TO TestBackup
 
 -- NOT OFTEN RUN:
 
 --This just needs to be run once on the master db in each server, which
 --allows the export the ability to include the users in the database.
-CREATE USER DCFBackup FROM LOGIN DCFBackup;
-EXEC sp_addrolemember 'loginmanager', 'DCFBackup'
+CREATE USER TestBackup FROM LOGIN TestBackup;
+EXEC sp_addrolemember 'loginmanager', 'TestBackup'
 
 GO
 
 --This needs to be run on the usage tracking server
-GRANT SELECT ON vw_All_Backups2 TO DCFBackup
+GRANT SELECT ON vw_All_Backups2 TO TestBackup
 GO
 
 --Set up UserTable for Password Rules
